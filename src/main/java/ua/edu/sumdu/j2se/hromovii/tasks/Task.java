@@ -6,7 +6,6 @@ public class Task {
     private int start;
     private int end;
     private int interval;
-    private int current;
     private boolean repeated;
     private boolean active;
 
