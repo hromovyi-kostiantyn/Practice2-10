@@ -21,6 +21,20 @@ public class Task {
         this.interval = interval;
         this.repeated = true;
     }
+    public Task(String title, int time, boolean active) {
+        this.title = title;
+        this.time = time;
+        this.repeated = false;
+        this.active = active;
+    }
+    public Task(String title, int start, int end, int interval,boolean active) {
+        this.title = title;
+        this.start = start;
+        this.end = end;
+        this.interval = interval;
+        this.repeated = true;
+        this.active = active;
+    }
     public void setTime(int time) {
         this.time = time;
         this.repeated = false;
