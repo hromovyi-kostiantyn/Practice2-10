@@ -14,14 +14,6 @@ public class LinkedTaskList {
     private Node last;
     private int size;
 
-    public static LinkedTaskList of(Task... tasks) {
-        LinkedTaskList linkedTaskList = new LinkedTaskList();
-        for (Task e: tasks
-             ) {
-            linkedTaskList.add(e);
-        }
-        return linkedTaskList;
-    }
     public void add(Task task) {
         Node newNode = new Node(task);
         if (isEmpty()) {
