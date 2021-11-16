@@ -10,11 +10,17 @@ public class Task {
     private boolean active;
 
     public Task(String title, int time) {
+        if (time < 0) {
+            throw new IllegalArgumentException();
+        }
         this.title = title;
         this.time = time;
         this.repeated = false;
     }
     public Task(String title, int start, int end, int interval) {
+        if (start < 0 || end < 0 || interval < 0) {
+            throw new IllegalArgumentException();
+        }
         this.title = title;
         this.start = start;
         this.end = end;
@@ -22,12 +28,18 @@ public class Task {
         this.repeated = true;
     }
     public Task(String title, int time, boolean active) {
+        if (time < 0) {
+            throw new IllegalArgumentException();
+        }
         this.title = title;
         this.time = time;
         this.repeated = false;
         this.active = active;
     }
     public Task(String title, int start, int end, int interval,boolean active) {
+        if (start < 0 || end < 0 || interval < 0) {
+            throw new IllegalArgumentException();
+        }
         this.title = title;
         this.start = start;
         this.end = end;
@@ -36,10 +48,16 @@ public class Task {
         this.active = active;
     }
     public void setTime(int time) {
+        if (time < 0) {
+            throw new IllegalArgumentException();
+        }
         this.time = time;
         this.repeated = false;
     }
     public void setTime(int start, int end, int interval) {
+        if (start < 0 || end < 0 || interval < 0) {
+            throw new IllegalArgumentException();
+        }
         this.start = start;
         this.end = end;
         this.interval = interval;
