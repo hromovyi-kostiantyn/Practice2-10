@@ -3,21 +3,17 @@ package ua.edu.sumdu.j2se.hromovii.tasks;
 public class ArrayTaskList {
     private Task[] tasks;
     private int size;
-    private final int DEFAULT_CAPACITY = 10;
 
-    /**
-     * creates task with capacity, if capacity < 5,get it to default capacity
-     * @constructor ArrayTaskList(int Capacity)
-     */
     public ArrayTaskList(int capacity) {
-        if (capacity < 5) {
-            tasks = new Task[DEFAULT_CAPACITY];
+        if (capacity <= 0) {
+            throw new IllegalArgumentException();
         } else {
             tasks = new Task[capacity];
         }
     }
 
     public ArrayTaskList() {
+        int DEFAULT_CAPACITY = 10;
         tasks = new Task[DEFAULT_CAPACITY];
     }
 
@@ -27,9 +23,8 @@ public class ArrayTaskList {
 
     public void add(Task task) {
         if (tasks.length == size) {
-            int optionalIncrease = (int) (tasks.length + Math.floor(tasks.length * 1.5));
-            Task[] temp = tasks;
-            tasks = new Task[optionalIncrease];
+            int increase = (int) Math.floor(tasks.length * 1.5) + 1;
+            Task[] temp = new Task[increase];
             System.arraycopy(tasks, 0, temp, 0, size);
             tasks = temp;
         }
