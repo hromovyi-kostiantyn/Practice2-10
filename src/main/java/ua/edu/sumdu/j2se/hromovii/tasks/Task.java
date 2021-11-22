@@ -10,7 +10,7 @@ public class Task {
     private boolean active;
 
     public Task(String title, int time) {
-        if (time < 0) {
+        if (time < 0 || title == null) {
             throw new IllegalArgumentException();
         }
         this.title = title;
@@ -18,7 +18,7 @@ public class Task {
         this.repeated = false;
     }
     public Task(String title, int start, int end, int interval) {
-        if (start < 0 || end < 0 || interval < 0) {
+        if (start < 0 || end < 0 || interval < 0 || title == null) {
             throw new IllegalArgumentException();
         }
         this.title = title;
@@ -28,7 +28,7 @@ public class Task {
         this.repeated = true;
     }
     public Task(String title, int time, boolean active) {
-        if (time < 0) {
+        if (time < 0 || title == null) {
             throw new IllegalArgumentException();
         }
         this.title = title;
@@ -37,7 +37,7 @@ public class Task {
         this.active = active;
     }
     public Task(String title, int start, int end, int interval,boolean active) {
-        if (start < 0 || end < 0 || interval < 0) {
+        if (start < 0 || end < 0 || interval < 0 || title == null) {
             throw new IllegalArgumentException();
         }
         this.title = title;
@@ -67,6 +67,9 @@ public class Task {
         return title;
     }
     public void setTitle(String title) {
+        if (title == null) {
+            throw new IllegalArgumentException();
+        }
         this.title = title;
     }
     public boolean isActive() {
