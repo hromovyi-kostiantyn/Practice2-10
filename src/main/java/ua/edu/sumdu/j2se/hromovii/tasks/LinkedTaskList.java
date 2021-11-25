@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.hromovii.tasks;
 
 import java.util.Objects;
 
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList{
     static class Node {
         Task task;
         Node next;
@@ -13,7 +13,7 @@ public class LinkedTaskList {
     private Node first;
     private Node last;
     private int size;
-
+    @Override
     public void add(Task task) {
         Node newNode = new Node(task);
         if (isEmpty()) {
@@ -24,6 +24,7 @@ public class LinkedTaskList {
         }
         size++;
     }
+    @Override
     public boolean remove(Task task) {
         if (isHere(task)) {
             int index = getIndexByTask(task);
@@ -48,12 +49,14 @@ public class LinkedTaskList {
             return false;
         }
     }
+    @Override
     public int size() {
         return size;
     }
+    @Override
     public Task getTask(int index) {
         Objects.checkIndex(index, size);
-        if (isEmpty()) {
+        if (index < 0 || isEmpty() ) {
             throw new IndexOutOfBoundsException();
         }
         return getNodeByIndex(index).task;
@@ -87,17 +90,5 @@ public class LinkedTaskList {
             current = current.next;
         }
         return false;
-    }
-    public LinkedTaskList incoming(int from, int to) {
-        LinkedTaskList list = new LinkedTaskList();
-        for (int i = 0; i < size;i++) {
-            Task task = getTask(i);
-            if (task.isActive()) {
-                if (task.getStartTime() > from && task.getEndTime() <= to) {
-                    list.add(task);
-                }
-            }
-        }
-        return list;
     }
 }

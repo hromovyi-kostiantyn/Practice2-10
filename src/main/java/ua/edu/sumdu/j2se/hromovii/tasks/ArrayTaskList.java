@@ -1,6 +1,8 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
-public class ArrayTaskList {
+import java.util.Objects;
+
+public class ArrayTaskList extends AbstractTaskList {
     private Task[] tasks;
     private int size;
 
@@ -16,11 +18,11 @@ public class ArrayTaskList {
         int DEFAULT_CAPACITY = 10;
         tasks = new Task[DEFAULT_CAPACITY];
     }
-
+    @Override
     public int size() {
         return size;
     }
-
+    @Override
     public void add(Task task) {
         if (tasks.length == size) {
             int increase = (int) Math.floor(tasks.length * 1.5) + 1;
@@ -31,6 +33,7 @@ public class ArrayTaskList {
         tasks[size] = task;
         size++;
     }
+    @Override
     public boolean remove(Task task) {
         if (isHere(task)) {
             int pos = index(task);
@@ -44,7 +47,9 @@ public class ArrayTaskList {
             return false;
         }
     }
+    @Override
     public Task getTask(int index) {
+        Objects.checkIndex(index, size);
         return tasks[index];
     }
     private int index(Task task) {
@@ -65,19 +70,5 @@ public class ArrayTaskList {
             }
         }
         return false;
-    }
-    public ArrayTaskList incoming(int from, int to) {
-        ArrayTaskList list1 = new ArrayTaskList();
-        for (Task x: tasks
-        ) {
-            if (x != null) {
-                if (x.isActive()) {
-                    if (x.getStartTime() > from && x.getEndTime() <= to) {
-                        list1.add(x);
-                    }
-                }
-            }
-        }
-        return list1;
     }
 }

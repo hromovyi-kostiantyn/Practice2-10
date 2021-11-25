@@ -4,10 +4,10 @@ public class Main {
 
 	public static void main(String[] args)
 	{
-		ArrayTaskList actual = new ArrayTaskList(1);
+		ArrayTaskList actual = new ArrayTaskList(20);
 		System.out.println("ARRAY TASK LIST");
 		System.out.println(actual.size());
-		Task task1 = new Task("name", 10, true);
+		Task task1 = new Task("name1", 10, true);
 		Task task2 = new Task("name2", 20,true);
 		Task task3 = new Task("name3", 30,true);
 
@@ -31,5 +31,10 @@ public class Main {
 		list1.remove(task1);
 		System.out.println(list1.size());
 
+		TaskListFactory.createTaskList(ListTypes.types.ARRAY);
+
+		LinkedTaskList actual1 = new LinkedTaskList();
+		System.out.println(actual.incoming(0,100));
+		System.out.println(actual1.incoming(0,200));
 	}
 }
