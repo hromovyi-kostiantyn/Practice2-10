@@ -196,23 +196,19 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
     }
 
     @Override
-    public Object clone() {
-        LinkedTaskList clone = superClone();
-
-        clone.first = clone.last = null;
-        clone.size = 0;
-
-        for (Node x = first; x != null; x = x.next)
-            clone.add(x.task);
-
-        return clone;
-    }
-
-    private LinkedTaskList superClone() {
+    public Object clone()  {
         try {
-            return (LinkedTaskList) super.clone();
+            LinkedTaskList clone = (LinkedTaskList) super.clone();
+
+            clone.first = clone.last = null;
+            clone.size = 0;
+
+            for (Node x = first; x != null; x = x.next)
+                clone.add(x.task);
+
+            return clone;
         } catch (CloneNotSupportedException e) {
-            throw new InternalError(e);
+            throw new AssertionError();
         }
     }
 }
