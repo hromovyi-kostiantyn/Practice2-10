@@ -132,7 +132,6 @@ public class Task implements Cloneable {
             return -1;
         }
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
