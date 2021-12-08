@@ -1,8 +1,8 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
-import java.util.Objects;
+import java.util.*;
 
-public class ArrayTaskList extends AbstractTaskList {
+public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     private Task[] tasks;
     private int size;
 
@@ -18,10 +18,12 @@ public class ArrayTaskList extends AbstractTaskList {
         int DEFAULT_CAPACITY = 10;
         tasks = new Task[DEFAULT_CAPACITY];
     }
+
     @Override
     public int size() {
         return size;
     }
+
     @Override
     public void add(Task task) {
         if (tasks.length == size) {
@@ -33,6 +35,7 @@ public class ArrayTaskList extends AbstractTaskList {
         tasks[size] = task;
         size++;
     }
+
     @Override
     public boolean remove(Task task) {
         if (isHere(task)) {
@@ -47,11 +50,59 @@ public class ArrayTaskList extends AbstractTaskList {
             return false;
         }
     }
+
+    private void remove(int index) {
+        if (index >= 0) {
+            Task[] temp = tasks;
+            tasks = new Task[temp.length];
+            System.arraycopy(temp, 0, tasks, 0, index);
+            System.arraycopy(temp, index + 1, tasks, index, temp.length - index - 1);
+            size--;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(size);
+        result = 31 * result + Arrays.hashCode(tasks);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayTaskList{" +
+                "tasks=" + Arrays.toString(tasks) +
+                ", size=" + size +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ArrayTaskList)) return false;
+        ArrayTaskList that = (ArrayTaskList) o;
+        return size == that.size && Arrays.equals(tasks, that.tasks);
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            ArrayTaskList result = (ArrayTaskList) super.clone();
+            result.tasks = tasks.clone();
+            return result;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
     @Override
     public Task getTask(int index) {
         Objects.checkIndex(index, size);
         return tasks[index];
     }
+
     private int index(Task task) {
         if (task == null) {
             return -1;
@@ -65,10 +116,50 @@ public class ArrayTaskList extends AbstractTaskList {
 
     private boolean isHere(Task task) {
         for (Task x : tasks) {
-            if (x.equals(task)) {
+            if (task.equals(x)) {
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<>() {
+            int current;
+            int prevElem = -1;
+
+            @Override
+            public boolean hasNext() {
+                return current != size;
+            }
+
+            public Task next() {
+                try {
+                    int i = current;
+                    Task next = getTask(i);
+                    prevElem = i;
+                    current = i + 1;
+                    return next;
+                } catch (IndexOutOfBoundsException e) {
+                    throw new NoSuchElementException();
+                }
+            }
+
+            public void remove() {
+                if (prevElem < 0)
+                    throw new IllegalStateException();
+
+                try {
+                    ArrayTaskList.this.remove(prevElem);
+                    if (prevElem < current)
+                        current--;
+                    prevElem = -1;
+                } catch (IndexOutOfBoundsException e) {
+                    throw new ConcurrentModificationException();
+                }
+            }
+
+        };
     }
 }
