@@ -138,7 +138,8 @@ public class Task implements Cloneable {
         if (this == o) return true;
         if (!(o instanceof Task)) return false;
         Task task = (Task) o;
-        return time == task.time && start == task.start && end == task.end && interval == task.interval && repeated == task.repeated && active == task.active && title.equals(task.title);
+        return time == task.time && start == task.start && end == task.end && interval == task.interval
+                && repeated == task.repeated && active == task.active && title.equals(task.title);
     }
 
     @Override
