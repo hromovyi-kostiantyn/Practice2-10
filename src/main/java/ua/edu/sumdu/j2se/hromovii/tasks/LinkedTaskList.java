@@ -4,6 +4,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList implements Cloneable {
     static class Node {
@@ -141,10 +142,10 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
         while (it1.hasNext() && it2.hasNext()) {
             Task o1 = it1.next();
             Object o2 = it2.next();
-            if (!(o1 == null ? o2 == null : o1.equals(o2)))
+            if (!(Objects.equals(o1, o2)))
                 return false;
         }
-        return !(it1.hasNext() || it2.hasNext());
+        return size == ((LinkedTaskList) o).size;
     }
 
     @Override
