@@ -1,6 +1,7 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     private Task[] tasks;
@@ -62,7 +63,6 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
             throw new IllegalArgumentException();
         }
     }
-
     @Override
     public int hashCode() {
         int result = Objects.hash(size);

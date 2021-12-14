@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
+import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task> {
     public abstract void add(Task task);
@@ -16,21 +17,26 @@ public abstract class AbstractTaskList implements Iterable<Task> {
 
     public abstract int size();
 
-    public AbstractTaskList incoming(int from, int to) {
+    public Stream<Task> getStream() {
+        Task[] elements = new Task[size()];
+        for (int i = 0;i < size();i++) {
+            elements[i] = getTask(i);
+        }
+        return Stream.of(elements);
+    }
+
+    public final AbstractTaskList incoming(int from, int to) {
         AbstractTaskList list;
         if (this.getClass().getSimpleName().equals("ArrayTaskList")) {
             list = new ArrayTaskList();
         } else {
             list = new LinkedTaskList();
         }
-        for (int i = 0; i < size(); i++) {
-            Task task = getTask(i);
-            if (task.isActive()) {
-                if (task.getStartTime() > from && task.getEndTime() <= to) {
-                    list.add(task);
-                }
-            }
-        }
+        Stream<Task> taskStream = getStream();
+        taskStream
+                .filter(task -> task.nextTimeAfter(from) != -1 && task.nextTimeAfter(to) == -1)
+                .forEach(list::add);
         return list;
     }
+
 }

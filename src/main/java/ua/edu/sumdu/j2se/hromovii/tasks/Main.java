@@ -1,5 +1,8 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -54,5 +57,10 @@ public class Main {
         for (Task task : arrayList) {
             System.out.println(task);
         }
+        ArrayTaskList a1 = (ArrayTaskList) arrayList.clone();
+        System.out.println(a1==arrayList);
+
+        System.out.println(arrayList.getStream().count());
+
     }
 }
