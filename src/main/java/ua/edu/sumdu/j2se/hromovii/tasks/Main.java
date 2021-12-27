@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -9,12 +10,12 @@ public class Main {
         ArrayTaskList actual = new ArrayTaskList(20);
         System.out.println("ARRAY TASK LIST");
         System.out.println(actual.size());
-        Task task1 = new Task("name1", 10);
-        Task task2 = new Task("name2", 20);
-        Task task3 = new Task("name3", 30);
-        Task task4 = new Task("name4", 40);
-        Task task5 = new Task("name5", 50);
-        Task task6 = new Task("name6", 60);
+        Task task1 = new Task("name1", LocalDateTime.of(2020,12,20,23,13));
+        Task task2 = new Task("name2", LocalDateTime.now());
+        Task task3 = new Task("name3", LocalDateTime.of(2010,12,20,23,13));
+        Task task4 = new Task("name4", LocalDateTime.of(2030,12,20,23,13));
+        Task task5 = new Task("name5", LocalDateTime.of(2120,12,20,23,13));
+        Task task6 = new Task("name6", LocalDateTime.of(2520,12,20,23,13));
 
 
         actual.add(task1);
@@ -26,7 +27,6 @@ public class Main {
         actual.remove(task1);
         System.out.println(actual.size());
         actual.getTask(2);
-        actual.incoming(0, 100);
         System.out.println("LINKED TASK LIST");
 
         LinkedTaskList list1 = new LinkedTaskList();
@@ -40,8 +40,6 @@ public class Main {
         TaskListFactory.createTaskList(ListTypes.types.ARRAY);
 
         LinkedTaskList actual1 = new LinkedTaskList();
-        System.out.println(actual.incoming(0, 100));
-        System.out.println(actual1.incoming(0, 200));
 
         System.out.println(TaskListFactory.createTaskList(ListTypes.types.ARRAY));
 
@@ -61,6 +59,5 @@ public class Main {
         System.out.println(a1==arrayList);
 
         System.out.println(arrayList.getStream().count());
-
     }
 }

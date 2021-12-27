@@ -1,5 +1,9 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task> {
@@ -22,21 +26,6 @@ public abstract class AbstractTaskList implements Iterable<Task> {
         for (int i = 0;i < size();i++) {
             elements[i] = getTask(i);
         }
-        return Stream.of(elements);
+        return Arrays.stream(elements);
     }
-
-    public final AbstractTaskList incoming(int from, int to) {
-        AbstractTaskList list;
-        if (this.getClass().getSimpleName().equals("ArrayTaskList")) {
-            list = new ArrayTaskList();
-        } else {
-            list = new LinkedTaskList();
-        }
-        Stream<Task> taskStream = getStream();
-        taskStream
-                .filter(task -> task.nextTimeAfter(from) != -1 && task.nextTimeAfter(to) == -1)
-                .forEach(list::add);
-        return list;
-    }
-
 }

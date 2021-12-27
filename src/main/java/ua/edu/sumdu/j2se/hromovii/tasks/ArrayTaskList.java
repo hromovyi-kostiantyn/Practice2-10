@@ -1,7 +1,7 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
 public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     private Task[] tasks;
