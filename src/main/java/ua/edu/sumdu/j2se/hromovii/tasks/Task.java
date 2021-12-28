@@ -1,27 +1,30 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
+import java.time.temporal.ChronoField;
 import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 public class Task implements Cloneable {
     private String title;
-    private int time;
-    private int start;
-    private int end;
+    private LocalDateTime time;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int interval;
     private boolean repeated;
     private boolean active;
 
-    public Task(String title, int time) {
-        if (time < 0 || title == null) {
+    public Task(String title, LocalDateTime time)  {
+        if (title == null || time == null) {
             throw new IllegalArgumentException();
         }
-        this.title = title;
-        this.time = time;
-        this.repeated = false;
+            this.title = title;
+            this.time = time;
+            this.repeated = false;
     }
 
-    public Task(String title, int start, int end, int interval) {
-        if (start < 0 || end < 0 || interval < 0 || title == null) {
+    public Task(String title, LocalDateTime start, LocalDateTime end, int interval) {
+        if (start == null || end == null || interval < 0  || title == null) {
             throw new IllegalArgumentException();
         }
         this.title = title;
@@ -31,16 +34,16 @@ public class Task implements Cloneable {
         this.repeated = true;
     }
 
-    public void setTime(int time) {
-        if (time < 0) {
+    public void setTime(LocalDateTime time) {
+        if (time == null) {
             throw new IllegalArgumentException();
         }
         this.time = time;
         this.repeated = false;
     }
 
-    public void setTime(int start, int end, int interval) {
-        if (start < 0 || end < 0 || interval < 0) {
+    public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
+        if (start == null || end == null || interval < 0) {
             throw new IllegalArgumentException();
         }
         this.start = start;
@@ -68,7 +71,7 @@ public class Task implements Cloneable {
         this.active = active;
     }
 
-    public int getTime() {
+    public LocalDateTime getTime() {
         if (repeated) {
             return start;
         } else {
@@ -76,7 +79,7 @@ public class Task implements Cloneable {
         }
     }
 
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         if (repeated) {
             return start;
         } else {
@@ -84,7 +87,7 @@ public class Task implements Cloneable {
         }
     }
 
-    public int getEndTime() {
+    public LocalDateTime getEndTime() {
         if (repeated) {
             return end;
         } else {
@@ -104,32 +107,32 @@ public class Task implements Cloneable {
         return repeated;
     }
 
-    public int nextTimeAfter(int current) {
+    public LocalDateTime nextTimeAfter(LocalDateTime current) {
         if (active) {
             if (repeated) {
-                if (start > current) {
+                if (current.isBefore(start)) {
                     return start;
                 } else {
-                    int temp;
+                    LocalDateTime temp;
                     temp = start;
-                    while (current >= temp) {
-                        temp = temp + interval;
+                    while (current.isAfter(temp) || current.isEqual(temp)) {
+                        temp = temp.plusSeconds(interval);
                     }
-                    if (temp <= end) {
+                    if (temp.isBefore(end) || temp.isEqual(end)) {
                         return temp;
                     } else {
-                        return -1;
+                        return null;
                     }
                 }
             } else {
-                if (current < time) {
+                if (current.isBefore(time)) {
                     return time;
                 } else {
-                    return -1;
+                    return null;
                 }
             }
         } else {
-            return -1;
+            return null;
         }
     }
     @Override
