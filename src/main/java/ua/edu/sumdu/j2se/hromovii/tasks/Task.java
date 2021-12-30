@@ -1,11 +1,10 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
-import java.time.temporal.ChronoField;
+import java.io.Serializable;
 import java.util.Objects;
 import java.time.LocalDateTime;
-import java.util.Set;
 
-public class Task implements Cloneable {
+public class Task implements Cloneable, Serializable {
     private String title;
     private LocalDateTime time;
     private LocalDateTime start;
@@ -33,7 +32,15 @@ public class Task implements Cloneable {
         this.interval = interval;
         this.repeated = true;
     }
-
+    public Task(String title, LocalDateTime time, LocalDateTime start, LocalDateTime end, int interval, boolean repeated, boolean active) {
+        this.title = title;
+        this.time = time;
+        this.start = start;
+        this.end = end;
+        this.interval = interval;
+        this.repeated = repeated;
+        this.active = active;
+    }
     public void setTime(LocalDateTime time) {
         if (time == null) {
             throw new IllegalArgumentException();
@@ -170,4 +177,5 @@ public class Task implements Cloneable {
             throw new AssertionError();
         }
     }
+
 }

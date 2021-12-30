@@ -1,12 +1,14 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public abstract class AbstractTaskList implements Iterable<Task> {
+public abstract class AbstractTaskList implements Iterable<Task>, Serializable {
     public abstract void add(Task task);
 
     public abstract boolean remove(Task task);
