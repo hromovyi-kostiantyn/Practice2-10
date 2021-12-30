@@ -1,8 +1,10 @@
 package ua.edu.sumdu.j2se.hromovii.tasks;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 public class Main {
 
@@ -12,7 +14,7 @@ public class Main {
         System.out.println(actual.size());
         Task task1 = new Task("name1", LocalDateTime.of(2020,12,20,23,13));
         Task task2 = new Task("name2", LocalDateTime.now());
-        Task task3 = new Task("name3", LocalDateTime.of(2010,12,20,23,13));
+        Task task3 = new Task("name3", LocalDateTime.of(2020,12,20,23,13));
         Task task4 = new Task("name4", LocalDateTime.of(2030,12,20,23,13));
         Task task5 = new Task("name5", LocalDateTime.of(2120,12,20,23,13));
         Task task6 = new Task("name6", LocalDateTime.of(2520,12,20,23,13));
@@ -59,5 +61,15 @@ public class Main {
         System.out.println(a1==arrayList);
 
         System.out.println(arrayList.getStream().count());
+
+        try {
+            Writer file = Files.newBufferedWriter(Paths.get("test.json"));
+            TaskIO.write(arrayList, file);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
